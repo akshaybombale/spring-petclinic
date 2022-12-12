@@ -1,24 +1,39 @@
 #!groovy
 
 pipeline {
-	agent any
+  agent any
   stages {
-  	stage('Maven Install') 
-{
-    	agent 
-{
-           image 'maven:3.5.0'
-}
-      steps 
-{
-      	sh 'mvn clean install'
+          stage {
+                 ('Maven Install') 
+           agent
+                  {
+           maven 'maven:3.5.0'
+                  }
+          }
+    stage('Build') {
+      steps {
+        // Run the Maven build
+        sh 'mvn clean install'
       }
     }
-    stage('Docker Build') {
-    	agent any
+    stage('Build Docker Image') {
       steps {
-      	sh 'docker build -t shanem/spring-petclinic:latest .'
+        // Build the Docker image
+        sh 'docker build -t shanem/spring-petclinic:latest .'
+      }
+    }
+    stage('Run Docker Image') {
+      steps {
+        // Run the Docker image
+        sh 'docker run shanem/spring-petclinic:latest .'
       }
     }
   }
 }
+
+
+
+
+
+
+
