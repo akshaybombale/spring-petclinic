@@ -7,7 +7,7 @@ pipeline {
 {
     	agent 
 {
-           image 'maven:3.5.0
+           image 'maven:3.5.0'
 }
       steps 
 {
